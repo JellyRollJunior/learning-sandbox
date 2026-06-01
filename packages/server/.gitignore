@@ -1,0 +1,13 @@
+node_modules
+dist
+
+# dotenv environment variable files
+.env
+.env.*
+
+# Typescript
+tsconfig.tsbuildinfo
+
+# Prisma
+generated
+/generated/prisma
