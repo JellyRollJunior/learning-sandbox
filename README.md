@@ -3,6 +3,13 @@
 - Testing stuff!
 - Clone of early luna-kanban-board
 
+# Learning Outcomes
+- Draggable
+    - onPointerDown
+    - onPointerMove
+    - onPointerUp
+    - setPointerCapture
+
 ## Endpoints
 
 | Method | URI                   | Function                   | Body (inputs)                   | Outputs         | Notes                                                                           |
