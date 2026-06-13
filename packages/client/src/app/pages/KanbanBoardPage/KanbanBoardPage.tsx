@@ -1,4 +1,4 @@
-import { useCallback, useState, type PointerEvent } from 'react';
+import { useCallback, useRef, useState, type PointerEvent } from 'react';
 import { createPortal } from 'react-dom';
 import type { Item, Section } from './data.ts';
 import { data } from './data.ts';
@@ -11,22 +11,28 @@ interface Position {
 type boardProps = { data: Section[] };
 const Board = ({ data }: boardProps) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [draggedItem, setDraggedItem] = useState<Item | null>(null);
   const [pos, setPos] = useState<Position>({ x: 0, y: 0 });
 
-  const onPointerDown = useCallback((event: PointerEvent) => {
+  const onPointerDown = useCallback((event: PointerEvent, item: Item) => {
     setIsDragging(true);
     event.currentTarget.setPointerCapture(event.pointerId);
     setPos({ x: event.clientX, y: event.clientY });
+    setDraggedItem(item);
   }, []);
 
-  const onPointerMove = useCallback((event: PointerEvent) => {
-    if (isDragging == false) return;
+  const onPointerMove = useCallback(
+    (event: PointerEvent) => {
+      if (isDragging == false) return;
 
-    setPos({ x: event.clientX, y: event.clientY });
-  }, [isDragging]);
+      setPos({ x: event.clientX, y: event.clientY });
+    },
+    [isDragging]
+  );
 
   const onPointerUp = useCallback(() => {
     setIsDragging(false);
+    setDraggedItem(null);
   }, []);
 
   return (
@@ -35,7 +41,7 @@ const Board = ({ data }: boardProps) => {
       <ul className="flex w-full items-center justify-center gap-6 border border-black p-2">
         {/* Sections */}
         {data.map((section) => (
-          <li key={section.id} className="border-blue min-h-50 min-w-50 border">
+          <li className="border-blue min-h-50 min-w-50 border" key={section.id}>
             <h3 className="text-center">
               {section.id} : {section.name}
             </h3>
@@ -45,7 +51,10 @@ const Board = ({ data }: boardProps) => {
               {section.items.map((item: Item) => (
                 <li
                   className="border border-black px-2 py-1 select-none"
-                  onPointerDown={onPointerDown}
+                  key={item.id}
+                  onPointerDown={(event: PointerEvent) =>
+                    onPointerDown(event, item)
+                  }
                   onPointerMove={onPointerMove}
                   onPointerUp={onPointerUp}
                 >
@@ -59,11 +68,14 @@ const Board = ({ data }: boardProps) => {
 
       {/* Dragging Ghost */}
       {isDragging &&
+        draggedItem &&
         createPortal(
           <div
-            className="pointer-events-none absolute h-5 w-10 bg-blue-200"
+            className="pointer-events-none absolute border border-red-300 bg-red-200 px-5 py-1"
             style={{ left: pos.x, top: pos.y }}
-          ></div>,
+          >
+            {draggedItem.id} : {draggedItem.name}
+          </div>,
           document.body
         )}
     </>
