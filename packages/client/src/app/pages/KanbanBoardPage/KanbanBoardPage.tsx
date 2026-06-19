@@ -10,39 +10,36 @@ interface Position {
 
 type boardProps = { data: Section[] };
 const Board = ({ data }: boardProps) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [draggedItemData, setDraggedItemData] = useState<{ item: Item, sectionId: Section["id"] } | null>(null);
+  const [draggedItem, setDraggedItem] = useState<{ item: Item, sectionId: Section["id"] } | null>(null);
   const [pos, setPos] = useState<Position>({ x: 0, y: 0 });
 
   const registerDraggedItem = useCallback((event: PointerEvent, item: Item, section: Section) => {
-    setIsDragging(true);
+    setDraggedItem({ item: item, sectionId: section.id});
     setPos({ x: event.clientX, y: event.clientY });
-    setDraggedItemData({ item: item, sectionId: section.id});
   }, []);
 
   const recordCursorCoordinates = useCallback(
     (event: PointerEvent) => {
-      if (isDragging == false) return;
+      if (!draggedItem) return;
 
       setPos({ x: event.clientX, y: event.clientY });
     },
-    [isDragging]
+    [draggedItem]
   );
 
   const removeDraggedItem = useCallback(() => {
-    setIsDragging(false);
-    setDraggedItemData(null);
+    setDraggedItem(null);
   }, []);
 
   const moveDraggedItem = useCallback((section: Section) => {
-    if (!isDragging) return;
-    if (draggedItemData?.sectionId === section.id) return;
+    if (!draggedItem) return;
+    if (draggedItem?.sectionId === section.id) return;
 
     console.log(
-      `Moving item - ${draggedItemData?.item.id} : ${draggedItemData?.item.name} to section - ${section.id} : ${section.name}`
+      `Moving item - ${draggedItem?.item.id} : ${draggedItem?.item.name} to section - ${section.id} : ${section.name}`
     )
 
-  }, [isDragging, draggedItemData])
+  }, [draggedItem])
 
   return (
     <>
@@ -82,13 +79,13 @@ const Board = ({ data }: boardProps) => {
       </ul>
 
       {/* Dragging Ghost */}
-      {isDragging && draggedItemData &&
+      {draggedItem &&
         createPortal(
           <div
             className="pointer-events-none absolute border border-red-300 bg-red-200 px-5 py-1"
             style={{ left: pos.x, top: pos.y }}
           >
-            {draggedItemData.item.id} : {draggedItemData.item.name}
+            {draggedItem.item.id} : {draggedItem.item.name}
           </div>,
           document.body
         )}
