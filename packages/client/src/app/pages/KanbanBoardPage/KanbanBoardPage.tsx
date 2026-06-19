@@ -37,6 +37,13 @@ const Board = ({ data }: boardProps) => {
     setDraggedItemData(null);
   }, []);
 
+  const moveDraggedItem = useCallback((section: Section) => {
+    if (!isDragging) return;
+
+    console.log(`Moving item - ${draggedItemData?.id} : ${draggedItemData?.name} to section - ${section.id} : ${section.name}`)
+
+  }, [isDragging, draggedItemData])
+
   return (
     <>
       {/* Board */}
@@ -46,11 +53,13 @@ const Board = ({ data }: boardProps) => {
         onPointerUp={removeDraggedItem}
         onPointerLeave={removeDraggedItem}
       >
+        
         {/* Sections */}
         {data && data.map((section) => (
           <li
             className="border-blue min-h-50 min-w-50 border"
             key={section.id}
+            onPointerUp={() => moveDraggedItem(section)}
           >
             <h3 className="text-center">
               {section.id} : {section.name}
