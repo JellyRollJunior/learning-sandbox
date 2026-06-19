@@ -8,19 +8,16 @@ interface Position {
   y: number;
 }
 
-// TODO NEXT: gray out / opacity on item currently being dragged
-
 type boardProps = { data: Section[] };
 const Board = ({ data }: boardProps) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [draggedItemData, setDraggedItemData] = useState<Item | null>(null);
+  const [draggedItemData, setDraggedItemData] = useState<{ item: Item, sectionId: Section["id"] } | null>(null);
   const [pos, setPos] = useState<Position>({ x: 0, y: 0 });
 
-  const registerDraggedItem = useCallback((event: PointerEvent, item: Item) => {
+  const registerDraggedItem = useCallback((event: PointerEvent, item: Item, section: Section) => {
     setIsDragging(true);
-    // event.currentTarget.setPointerCapture(event.pointerId);
     setPos({ x: event.clientX, y: event.clientY });
-    setDraggedItemData(item);
+    setDraggedItemData({ item: item, sectionId: section.id});
   }, []);
 
   const recordCursorCoordinates = useCallback(
@@ -39,8 +36,11 @@ const Board = ({ data }: boardProps) => {
 
   const moveDraggedItem = useCallback((section: Section) => {
     if (!isDragging) return;
+    if (draggedItemData?.sectionId === section.id) return;
 
-    console.log(`Moving item - ${draggedItemData?.id} : ${draggedItemData?.name} to section - ${section.id} : ${section.name}`)
+    console.log(
+      `Moving item - ${draggedItemData?.item.id} : ${draggedItemData?.item.name} to section - ${section.id} : ${section.name}`
+    )
 
   }, [isDragging, draggedItemData])
 
@@ -71,9 +71,7 @@ const Board = ({ data }: boardProps) => {
                 <li
                   className="border border-black px-2 py-1 select-none"
                   key={item.id}
-                  onPointerDown={(event: PointerEvent) =>
-                    registerDraggedItem(event, item)
-                  }
+                  onPointerDown={(event: PointerEvent) => registerDraggedItem(event, item, section)}
                 >
                   {item.id} : {item.name}
                 </li>
@@ -90,7 +88,7 @@ const Board = ({ data }: boardProps) => {
             className="pointer-events-none absolute border border-red-300 bg-red-200 px-5 py-1"
             style={{ left: pos.x, top: pos.y }}
           >
-            {draggedItemData.id} : {draggedItemData.name}
+            {draggedItemData.item.id} : {draggedItemData.item.name}
           </div>,
           document.body
         )}
