@@ -9,6 +9,10 @@
     - onPointerMove
     - onPointerUp
     - setPointerCapture
+- Turborepo monorepo configuration
+    - scripts
+        - $ turbo build
+    - pnpm-workspace.yaml configuration
 
 ## Endpoints
 

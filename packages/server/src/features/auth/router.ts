@@ -1,10 +1,11 @@
-import { Router } from 'express';
+import type { Router } from 'express';
+import { Router as CreateRouter } from 'express';
 import { signupInputSchema } from '@/features/auth/input.schema.js';
 import { validateRequestBody } from '@/middleware/validate.js';
 import { passport } from '@/features/auth/passport/passport.js';
 import * as authController from '@/features/auth/controller.js';
 
-const authRouter = Router();
+const authRouter: Router = CreateRouter();
 
 authRouter.post(
     '/signup',

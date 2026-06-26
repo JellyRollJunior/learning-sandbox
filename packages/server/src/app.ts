@@ -1,3 +1,4 @@
+import type { Application } from 'express'
 import express from 'express';
 import session from 'express-session';
 import { env } from '@/config/env.js';
@@ -5,7 +6,7 @@ import { passport } from '@/features/auth/passport/passport.js'
 import { authRouter } from '@/features/auth/router.js';
 import { errorHandler, errorHandler404 } from '@/middleware/errorHandler.js';
 
-const app = express();
+const app: Application = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
