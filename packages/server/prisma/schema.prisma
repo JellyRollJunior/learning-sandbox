@@ -13,3 +13,26 @@ model User {
   displayName String
   github_id   String? @unique
 }
+
+model Board {
+  id       String    @id @default(uuid())
+  title    String
+  sections Section[]
+}
+
+model Section {
+  id    String @id @default(uuid())
+  title String
+  items Item[]
+
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  boardId String
+}
+
+model Item {
+  id    String @id @default(uuid())
+  title String
+
+  section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String
+}

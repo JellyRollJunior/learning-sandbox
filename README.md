@@ -4,6 +4,7 @@
 - Clone of early luna-kanban-board
 
 # Learning Outcomes
+
 - Draggable
     - onPointerDown
     - onPointerMove
@@ -13,6 +14,16 @@
     - scripts
         - $ turbo build
     - pnpm-workspace.yaml configuration
+- Prisma studio db viewer
+
+# Notes
+
+- Turborepo
+    - manage build order between packages (shared -> client/server)
+    - cache builds
+- Prisma
+    - `npx prisma studio`
+        - interactive prisma db viewer
 
 ## Endpoints
 
