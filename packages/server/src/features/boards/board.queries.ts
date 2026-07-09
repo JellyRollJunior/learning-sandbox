@@ -15,6 +15,20 @@ const getBoard = async (id: string) => {
             where: {
                 id: id,
             },
+            select: {
+                sections: {
+                    select: {
+                        id: true,
+                        title: true,
+                        items: {
+                            select: {
+                                id: true,
+                                title: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
         return data;
     } catch (error) {
