@@ -31,7 +31,21 @@ const Board = ({ data }: boardProps) => {
     setDraggedItem(null);
   }, []);
 
-  const moveDraggedItem = useCallback((section: Section) => {
+  const isCursorOnTopHalfOfItem = (event: PointerEvent) => {
+    // item halfway point == top + height / 2
+    
+    const item = event.currentTarget.getBoundingClientRect();
+    const cursorY = event.clientY;
+    const itemHalfPoint = item.top + (item.height / 2);
+    console.log(`is: ${item.top} ${item.height} ${cursorY}`)
+    console.log(item)
+
+    return cursorY <= itemHalfPoint
+  }
+
+  const moveDraggedItem = useCallback((event: PointerEvent, section: Section) => {
+    console.log(`x: ${event.clientX} - y: ${event.clientY}`)
+    console.log(isCursorOnTopHalfOfItem(event))
     if (!draggedItem) return;
     if (draggedItem?.sectionId === section.id) return;
 
@@ -56,7 +70,6 @@ const Board = ({ data }: boardProps) => {
           <li
             className="border-blue min-h-50 min-w-50 border"
             key={section.id}
-            onPointerUp={() => moveDraggedItem(section)}
           >
             <h3 className="text-center">
               {section.id} : {section.name}
@@ -69,6 +82,7 @@ const Board = ({ data }: boardProps) => {
                   className="border border-black px-2 py-1 select-none"
                   key={item.id}
                   onPointerDown={(event: PointerEvent) => registerDraggedItem(event, item, section)}
+                  onPointerUp={(event: PointerEvent) => moveDraggedItem(event, section)}
                 >
                   {item.id} : {item.name}
                 </li>
