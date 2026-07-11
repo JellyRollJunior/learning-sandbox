@@ -14,12 +14,17 @@ const DropArea = ({ onDropHandler }: DropAreaProps) => {
   );
 };
 
-type ItemProps = { item: Item; onDragStartHandler: DragEventHandler };
-const Item = ({ item, onDragStartHandler }: ItemProps) => {
+type ItemProps = {
+  item: Item;
+  onDragStartHandler: DragEventHandler;
+  onDragEndHandler: DragEventHandler;
+};
+const Item = ({ item, onDragStartHandler, onDragEndHandler }: ItemProps) => {
   return (
     <li
       className="border border-black px-2 py-1 select-none"
       onDragStart={onDragStartHandler}
+      onDragEnd={onDragEndHandler}
       draggable
     >
       {item.id} : {item.name}
@@ -51,6 +56,7 @@ const Board = ({ data }: BoardProps) => {
                     <Item
                       item={item}
                       onDragStartHandler={() => setActiveItem(item.id)}
+                      onDragEndHandler={() => setActiveItem(null)}
                     />
                     <DropArea onDropHandler={() => console.log('hello')} />
                   </Fragment>
