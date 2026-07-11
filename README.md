@@ -10,6 +10,14 @@
     - onPointerMove
     - onPointerUp
     - setPointerCapture
+- Draggable 2
+    - draggable
+    - onDragStart
+    - onDragEnd
+    - onDragOver
+    - onDragEnter
+    - onDragLeave
+    - onDrop
 - Turborepo monorepo configuration
     - scripts
         - $ turbo build
