@@ -8,18 +8,21 @@ const DropArea = ({ isDragging, onDropHandler }: DropAreaProps) => {
 
   return (
     <li
-      className="flex h-10 w-full items-center justify-center rounded-sm border border-black"
+      className="flex h-10 w-full items-center justify-center rounded-sm border border-black "
       style={
         isVisible
-          ? { opacity: 100, transition: 'all 0.2s ease-in-out' }
-          : { height: 0, opacity: 0, transition: 'all 0.1s ease-in-out' }
+          ? { opacity: 100, marginTop: 4, marginBottom: 4, transition: 'all 0.2s ease-in-out' }
+          : { height: 10, opacity: 0, transition: 'all 0.1s ease-in-out' }
       }
       onDragEnter={() => {
         if (isDragging) setIsVisible(true);
       }}
       onDragLeave={() => setIsVisible(false)}
       onDragOver={(event) => event.preventDefault()}
-      onDrop={onDropHandler}
+      onDrop={(event) => {
+        onDropHandler(event);
+        setIsVisible(false);
+      }}
     >
       Drop Area
     </li>
@@ -69,7 +72,7 @@ const Board = ({ data }: BoardProps) => {
               <h3 className="text-center">
                 {section.id} : {section.name}
               </h3>
-              <ol className="flex flex-col gap-2 p-2">
+              <ol className="flex flex-col gap-0.5 p-2">
                 {/* items */}
                 <DropArea
                   isDragging={activeItem != null}
