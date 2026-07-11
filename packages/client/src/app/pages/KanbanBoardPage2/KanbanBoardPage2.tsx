@@ -7,6 +7,7 @@ const DropArea = ({ onDropHandler }: DropAreaProps) => {
   return (
     <li
       className="flex h-10 w-full items-center justify-center rounded-sm border border-black"
+      onDragOver={(event) => event.preventDefault()}
       onDrop={onDropHandler}
     >
       Drop Area
