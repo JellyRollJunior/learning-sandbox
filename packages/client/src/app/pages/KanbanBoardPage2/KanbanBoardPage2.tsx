@@ -1,12 +1,14 @@
+import { useState, type DragEventHandler } from 'react';
 import type { Item, Section } from './data.ts';
 import { data } from './data.ts';
 
-type ItemProps = { item: Item };
-const Item = ({ item }: ItemProps) => {
+type ItemProps = { item: Item; onDragStartHandler: DragEventHandler };
+const Item = ({ item, onDragStartHandler }: ItemProps) => {
   return (
     <li
       className="border border-black px-2 py-1 select-none"
       key={item.id}
+      onDragStart={onDragStartHandler}
       draggable
     >
       {item.id} : {item.name}
@@ -16,26 +18,35 @@ const Item = ({ item }: ItemProps) => {
 
 type BoardProps = { data: Section[] };
 const Board = ({ data }: BoardProps) => {
+  const [activeItem, setActiveItem] = useState<number | null>(null);
+
   return (
-    <ol className="flex w-full items-center justify-center gap-6 border border-black p-2">
-      
-      {/* Sections */}
-      {data &&
-        data.map((section) => (
-          <li className="border-blue min-h-50 min-w-50 border" key={section.id}>
-            <h3 className="text-center">
-              {section.id} : {section.name}
-            </h3>
-            <ol className="flex flex-col gap-2 p-2">
-              
-              {/* items */}
-              {section.items.map((item: Item) => (
-                <Item item={item} />
-              ))}
-            </ol>
-          </li>
-        ))}
-    </ol>
+    <>
+      <ol className="flex w-full items-center justify-center gap-6 border border-black p-2">
+        {/* Sections */}
+        {data &&
+          data.map((section) => (
+            <li
+              className="border-blue min-h-50 min-w-50 border"
+              key={section.id}
+            >
+              <h3 className="text-center">
+                {section.id} : {section.name}
+              </h3>
+              <ol className="flex flex-col gap-2 p-2">
+                {/* items */}
+                {section.items.map((item: Item) => (
+                  <Item
+                    item={item}
+                    onDragStartHandler={() => setActiveItem(item.id)}
+                  />
+                ))}
+              </ol>
+            </li>
+          ))}
+      </ol>
+      <h1>Active item: - {activeItem}</h1>
+    </>
   );
 };
 
