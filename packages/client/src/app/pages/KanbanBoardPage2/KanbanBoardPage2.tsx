@@ -37,6 +37,17 @@ type BoardProps = { data: Section[] };
 const Board = ({ data }: BoardProps) => {
   const [activeItem, setActiveItem] = useState<number | null>(null);
 
+  const handleMoveItem = (
+    sectionId: Section['id'],
+    order: Item['order']
+  ) => {
+    if (!activeItem) return;
+    // insert code here: if order + section are the same, do not move
+    console.log(
+      `moving [item ${activeItem}] to [section ${sectionId} - order ${Number(order) + 1}]`
+    );
+  };
+
   return (
     <>
       <ol className="flex w-full items-center justify-center gap-6 border border-black p-2">
@@ -59,7 +70,11 @@ const Board = ({ data }: BoardProps) => {
                       onDragStartHandler={() => setActiveItem(item.id)}
                       onDragEndHandler={() => setActiveItem(null)}
                     />
-                    <DropArea onDropHandler={() => console.log('hello')} />
+                    <DropArea
+                      onDropHandler={() =>
+                        handleMoveItem(section.id, item.order)
+                      }
+                    />
                   </Fragment>
                 ))}
               </ol>
