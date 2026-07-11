@@ -1,0 +1,1 @@
+export { KanbanBoardPage2 } from './KanbanBoardPage2.tsx'

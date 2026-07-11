@@ -119,8 +119,17 @@ const KanbanBoardPage = () => {
           <Board data={data} />
         </div>
       </main>
+
+      <div className='size-50 bg-black' draggable></div>
     </div>
   );
 };
 
 export { KanbanBoardPage };
+
+
+// video notes
+// drag
+// on dragstart ondragend
+// cursor: grab
+// active styling aka on drag styling 
