@@ -2,11 +2,18 @@ import { Fragment, useState, type DragEventHandler } from 'react';
 import type { Item, Section } from './data.ts';
 import { data } from './data.ts';
 
-type DropAreaProps = { onDropHandler: DragEventHandler };
-const DropArea = ({ onDropHandler }: DropAreaProps) => {
+type DropAreaProps = { isDragging: boolean; onDropHandler: DragEventHandler };
+const DropArea = ({ isDragging, onDropHandler }: DropAreaProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <li
-      className="flex h-10 w-full items-center justify-center rounded-sm border border-black"
+      className="flex h-10 w-full items-center justify-center rounded-sm border border-black transition-opacity"
+      style={isVisible ? { opacity: 100 } : { opacity: 0 }}
+      onDragEnter={() => {
+        if (isDragging) setIsVisible(true);
+      }}
+      onDragLeave={() => setIsVisible(false)}
       onDragOver={(event) => event.preventDefault()}
       onDrop={onDropHandler}
     >
@@ -61,6 +68,7 @@ const Board = ({ data }: BoardProps) => {
               <ol className="flex flex-col gap-2 p-2">
                 {/* items */}
                 <DropArea
+                  isDragging={activeItem != null}
                   onDropHandler={() => handleMoveItem(section.id, '0')}
                 />
                 {section.items.map((item: Item) => (
@@ -71,6 +79,7 @@ const Board = ({ data }: BoardProps) => {
                       onDragEndHandler={() => setActiveItem(null)}
                     />
                     <DropArea
+                      isDragging={activeItem != null}
                       onDropHandler={() =>
                         handleMoveItem(section.id, `${Number(item.order) + 1}`)
                       }
