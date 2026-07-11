@@ -16,12 +16,14 @@ model User {
 
 model Board {
   id       String    @id @default(uuid())
+  order    String
   title    String
   sections Section[]
 }
 
 model Section {
   id    String @id @default(uuid())
+  order String
   title String
   items Item[]
 
@@ -31,6 +33,7 @@ model Section {
 
 model Item {
   id    String @id @default(uuid())
+  order String
   title String
 
   section   Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
