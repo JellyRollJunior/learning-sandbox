@@ -8,8 +8,12 @@ const DropArea = ({ isDragging, onDropHandler }: DropAreaProps) => {
 
   return (
     <li
-      className="flex h-10 w-full items-center justify-center rounded-sm border border-black transition-opacity"
-      style={isVisible ? { opacity: 100 } : { opacity: 0 }}
+      className="flex h-10 w-full items-center justify-center rounded-sm border border-black"
+      style={
+        isVisible
+          ? { opacity: 100, transition: 'all 0.2s ease-in-out' }
+          : { height: 0, opacity: 0, transition: 'all 0.1s ease-in-out' }
+      }
       onDragEnter={() => {
         if (isDragging) setIsVisible(true);
       }}
