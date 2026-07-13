@@ -1,6 +1,11 @@
+import type { Item } from '@prisma/client';
 import { prisma } from '@/db/prisma.js';
 
-const createItem = async (sectionId: string, title: string, order: string) => {
+const createItem = async (
+    sectionId: Item['sectionId'],
+    order: Item['order'],
+    title: Item['title']
+) => {
     try {
         const data = await prisma.item.create({
             data: {
@@ -15,7 +20,7 @@ const createItem = async (sectionId: string, title: string, order: string) => {
     }
 };
 
-const editItem = async (id: string, title: string) => {
+const editItem = async (id: Item['id'], title: Item['title']) => {
     try {
         const data = await prisma.item.update({
             where: {
@@ -31,7 +36,11 @@ const editItem = async (id: string, title: string) => {
     }
 };
 
-const moveItem = async (id: string, sectionId: string) => {
+const moveItem = async (
+    sectionId: Item['sectionId'],
+    id: Item['id'],
+    order: Item['order']
+) => {
     try {
         const data = await prisma.item.update({
             where: {
@@ -39,6 +48,7 @@ const moveItem = async (id: string, sectionId: string) => {
             },
             data: {
                 sectionId: sectionId,
+                order: order,
             },
         });
         return data;
