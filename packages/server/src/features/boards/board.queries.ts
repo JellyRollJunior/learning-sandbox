@@ -32,16 +32,16 @@ const getBoard = async (id: string) => {
                             },
                             orderBy: {
                                 order: 'asc',
-                            }
+                            },
                         },
                     },
                     orderBy: {
                         order: 'asc',
-                    }
+                    },
                 },
-                orderBy: {
-                    order: 'asc',
-                }
+            },
+            orderBy: {
+                order: 'asc',
             },
         });
         return data;

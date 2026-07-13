@@ -57,12 +57,15 @@ const moveItem = async (
     }
 };
 
-const getItems = async (sectionId: Section['id']) => {
+const getItemsBySection = async (sectionId: Section['id']) => {
     try {
         const data = await prisma.item.findMany({
             where: {
                 sectionId: sectionId,
             },
+            orderBy: {
+                order: 'asc'
+            }
         });
         return data;
     } catch (error) {
@@ -70,4 +73,4 @@ const getItems = async (sectionId: Section['id']) => {
     }
 };
 
-export { createItem, editItem, moveItem, getItems };
+export { createItem, editItem, moveItem, getItemsBySection };

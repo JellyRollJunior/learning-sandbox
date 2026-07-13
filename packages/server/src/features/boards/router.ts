@@ -6,5 +6,6 @@ const boardRouter: Router = CreateRouter();
 
 boardRouter.get('/', boardController.getBoards)
 boardRouter.get('/:boardId', boardController.getBoard)
+boardRouter.post('/test', boardController.createItem)
 
 export { boardRouter };
