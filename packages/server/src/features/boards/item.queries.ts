@@ -1,4 +1,4 @@
-import type { Item } from '@prisma/client';
+import type { Section, Item } from '@prisma/client';
 import { prisma } from '@/db/prisma.js';
 
 const createItem = async (
@@ -57,4 +57,17 @@ const moveItem = async (
     }
 };
 
-export { createItem, editItem, moveItem };
+const getItems = async (sectionId: Section['id']) => {
+    try {
+        const data = await prisma.item.findMany({
+            where: {
+                sectionId: sectionId,
+            },
+        });
+        return data;
+    } catch (error) {
+        throw new Error('Unable to fetch items');
+    }
+};
+
+export { createItem, editItem, moveItem, getItems };

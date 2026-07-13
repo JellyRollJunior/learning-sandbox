@@ -46,6 +46,7 @@
 
 ## Todo
 - Server
+  - socket setup  
   - ordering schema
   - querying by order
   - ordering implementation - fractional indexing

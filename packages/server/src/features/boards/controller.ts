@@ -1,5 +1,8 @@
+import type { Board, Item } from '@prisma/client';
 import type { Request, Response, NextFunction } from 'express';
 import * as boardQueries from '@/features/boards/board.queries.js';
+import * as itemQueries from '@/features/boards/item.queries.js';
+import { generateKeyBetween } from 'fractional-indexing';
 
 const getBoards = async (_req: Request, res: Response, next: NextFunction) => {
     try {
@@ -12,14 +15,14 @@ const getBoards = async (_req: Request, res: Response, next: NextFunction) => {
 };
 
 const getBoard = async (
-    req: Request<{ boardId: string }, {}, {}>,
+    req: Request<{ boardId: Board['id'] }, {}, {}>,
     res: Response,
     next: NextFunction
 ) => {
     try {
         const boardId = req.params.boardId;
         const board = await boardQueries.getBoard(boardId);
-        
+
         res.json(board);
     } catch (error) {
         next(error);
