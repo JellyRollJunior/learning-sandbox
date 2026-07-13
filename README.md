@@ -43,3 +43,11 @@
 | POST   | /auth/github/callback | GitHub oauth2 callback     |                                 | { token }       | Callback to receive token after successful authorization                        |
 | GET    | /boards               | get boards                 |                                 |                 |                                                                                 |
 | GET    | /boards/:boardId      | get board                  |                                 |                 |                                                                                 |
+
+## Todo
+- Server
+  - ordering schema
+  - querying by order
+  - ordering implementation - fractional indexing
+    - creating with order
+    - moving with order

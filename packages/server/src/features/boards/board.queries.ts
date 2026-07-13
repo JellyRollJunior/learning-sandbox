@@ -16,18 +16,32 @@ const getBoard = async (id: string) => {
                 id: id,
             },
             select: {
+                id: true,
+                order: true,
+                title: true,
                 sections: {
                     select: {
                         id: true,
+                        order: true,
                         title: true,
                         items: {
                             select: {
                                 id: true,
+                                order: true,
                                 title: true,
                             },
+                            orderBy: {
+                                order: 'asc',
+                            }
                         },
                     },
+                    orderBy: {
+                        order: 'asc',
+                    }
                 },
+                orderBy: {
+                    order: 'asc',
+                }
             },
         });
         return data;
