@@ -24,6 +24,9 @@
     - pnpm-workspace.yaml configuration
 - Prisma studio db viewer
 - Socket.io Admin UI setup
+- Testing Socket.io events with Postman
+    - how to send callback?
+    - how to type callbacks on server
 
 # Notes
 
