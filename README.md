@@ -23,6 +23,7 @@
         - $ turbo build
     - pnpm-workspace.yaml configuration
 - Prisma studio db viewer
+- Socket.io Admin UI setup
 
 # Notes
 
@@ -45,10 +46,14 @@
 | GET    | /boards/:boardId      | get board                  |                                 |                 |                                                                                 |
 
 ## Todo
-- Server
-  - socket setup  
-  - ordering schema
-  - querying by order
-  - ordering implementation - fractional indexing
-    - creating with order
-    - moving with order
+- frontend - pull data from server
+    - create hook to fetch board
+    - create function to refetch
+- Realtime
+    - setup socket server connection
+    - setup admin ui instrument
+    - implement connection listener
+    - connect Frontend to socket
+        - socket hook
+    - implement create item listener
+        - trigger fetch board refresh

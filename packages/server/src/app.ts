@@ -1,5 +1,6 @@
 import type { Application } from 'express'
 import express from 'express';
+import cors from 'cors';
 import session from 'express-session';
 import { env } from '@/config/env.js';
 import { passport } from '@/features/auth/passport/passport.js'
@@ -8,7 +9,11 @@ import { boardRouter } from '@/features/boards/router.js';
 import { errorHandler, errorHandler404 } from '@/middleware/errorHandler.js';
 
 const app: Application = express();
-
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+    })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
