@@ -1,6 +1,7 @@
 import { Fragment, useState, type DragEventHandler } from 'react';
 import type { Item, Section } from './data.ts';
 import { data } from './data.ts';
+import { SocketProvider } from './SocketContext.tsx';
 
 type DropAreaProps = { isDragging: boolean; onDropHandler: DragEventHandler };
 const DropArea = ({ isDragging, onDropHandler }: DropAreaProps) => {
@@ -8,7 +9,7 @@ const DropArea = ({ isDragging, onDropHandler }: DropAreaProps) => {
 
   return (
     <li
-      className="flex h-10 w-full items-center justify-center rounded-sm border border-black my-1"
+      className="my-1 flex h-10 w-full items-center justify-center rounded-sm border border-black"
       style={
         isVisible
           ? { opacity: 100, transition: 'all 0.2s ease-in-out' }
@@ -60,7 +61,7 @@ const Board = ({ data }: BoardProps) => {
   };
 
   return (
-    <>
+    <SocketProvider>
       <ol className="flex w-full items-center justify-center gap-6 border border-black p-2">
         {/* Sections */}
         {data &&
@@ -98,7 +99,7 @@ const Board = ({ data }: BoardProps) => {
           ))}
       </ol>
       <h1>Active item: - {activeItem}</h1>
-    </>
+    </SocketProvider>
   );
 };
 

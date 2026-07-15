@@ -10,7 +10,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:3000', 'https://admin.socket.io'],
+        origin: ['http://localhost:3000', 'http://localhost:5173', 'https://admin.socket.io'],
         credentials: true,
     },
 });
