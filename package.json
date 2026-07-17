@@ -1,4 +1,8 @@
 {
+    "name": "learning-sandbox",
+    "workspaces": [
+        "packages/*"
+    ],
     "private": true,
     "scripts": {
         "build": "turbo run build",

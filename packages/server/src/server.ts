@@ -6,6 +6,10 @@ import { instrument } from '@socket.io/admin-ui';
 import { attachSocketListeners } from '@/sockets/attachSocketListeners.js';
 import bcrypt from 'bcryptjs';
 
+import { usagi } from '@learning-sandbox/shared';
+
+console.log(usagi);
+
 const server = createServer(app);
 
 const io = new Server(server, {

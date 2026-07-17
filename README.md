@@ -53,10 +53,12 @@
     - create hook to fetch board
     - create function to refetch
 - Realtime
-    - setup socket server connection
-    - setup admin ui instrument
-    - implement connection listener
-    - connect Frontend to socket
-        - socket hook
     - implement create item listener
         - trigger fetch board refresh
+    - server
+    - shared
+        - build shared on turbo build
+        - item
+        - board
+        - socket error
+        - socket event types

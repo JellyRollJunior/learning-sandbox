@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "@learning-sandbox/client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -16,7 +16,8 @@
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.15.1",
     "socket.io-client": "^4.8.3",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "@learning-sandbox/shared": "workspace:*"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
