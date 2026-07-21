@@ -29,6 +29,7 @@
     - how to send callback?
     - how to type callbacks on server
 - PNPM workspace configuration
+- Ordering items in O(1) using Fractional indexing 
 
 # Notes
 

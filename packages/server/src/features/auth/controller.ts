@@ -66,7 +66,7 @@ const getLoginGithubCallback = (
         (error: Error, user: Express.User, info: { message?: string }) => {
             // Executed after GithubStrategy
             if (error) return next(error);
-            if (!user) return next(new AuthenticationError(info?.message ?? 'Error authenticating with GitHub'));
+            if (!user) return next(new AuthenticationError(info?.message ?? 'Unable to authenticate with GitHub'));
             
             const token = signToken(user);
             res.json({ message: 'GitHub authentication success', token })
